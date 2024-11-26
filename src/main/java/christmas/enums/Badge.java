@@ -17,7 +17,4 @@ public enum Badge {
         return this.name;
     }
 
-    public int getStandard() {
-        return this.standard;
-    }
 }

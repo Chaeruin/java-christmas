@@ -31,6 +31,9 @@ public class BenefitService {
                 benefitPrice += BenefitType.WEEKDAY_DISCOUNT.getDiscountPrice() * order.getCount();
             }
         }
+        if (benefitPrice == 0) {
+            return null;
+        }
         return new Benefit(BenefitType.WEEKDAY_DISCOUNT, day, benefitPrice);
     }
 
@@ -40,6 +43,9 @@ public class BenefitService {
             if (order.getMenu().getMenuType() == MenuType.MAIN) {
                 benefitPrice += BenefitType.WEEKEND_DISCOUNT.getDiscountPrice() * order.getCount();
             }
+        }
+        if (benefitPrice == 0) {
+            return null;
         }
         return new Benefit(BenefitType.WEEKEND_DISCOUNT, day, benefitPrice);
     }
@@ -62,24 +68,30 @@ public class BenefitService {
     public List<Benefit> settingBenefits(Day day, List<Order> orderList) {
         List<Benefit> benefits = new LinkedList<>();
         if (isOverStandard(orderList)) {
-            benefits.add(dDayDiscountBenefit(day));
-            if (day.getIsWeekEnd()) {
-                benefits.add(weekEndDiscountBenefit(orderList, day));
-            } else {
-                benefits.add(weekDayDiscountBenefit(orderList, day));
-            }
-            if (day.getStarDate().getIsStarDate()) {
-                benefits.add(starDayDiscountBenefit(day));
-            }
-            // 증정 이벤트는 null 분기 처리 해줘야함
-            benefits.add(giftPresentationBenefit(orderList, day));
+            addToBenefits(benefits, day, orderList);
         }
         return benefits;
+    }
+
+    public void addToBenefits(List<Benefit> benefits, Day day, List<Order> orderList) {
+        benefits.add(dDayDiscountBenefit(day));
+        if (day.getIsWeekEnd() && weekEndDiscountBenefit(orderList, day) != null) {
+            benefits.add(weekEndDiscountBenefit(orderList, day));
+        } else if (!day.getIsWeekEnd() && weekDayDiscountBenefit(orderList, day) != null) {
+            benefits.add(weekDayDiscountBenefit(orderList, day));
+        }
+        if (day.getStarDate().getIsStarDate()) {
+            benefits.add(starDayDiscountBenefit(day));
+        }
+        benefits.add(giftPresentationBenefit(orderList, day));
     }
 
     public int totalBenefitPrice(List<Benefit> benefits) {
         int sumPrice = 0;
         for (Benefit benefit : benefits) {
+            if (benefit == null) {
+                continue;
+            }
             sumPrice += benefit.getBenefitPrice();
         }
         return sumPrice;

@@ -44,6 +44,10 @@ public class ChristmasController {
         orderService.isOnlyDrinkOrder(orderList);
         List<Benefit> benefits = benefitService.settingBenefits(day, orderList);
 
+        outputViewFunctions(day, orderList, benefits);
+    }
+
+    public void outputViewFunctions(Day day, List<Order> orderList, List<Benefit> benefits) {
         outputView.printDayBenefits(day);
         outputView.printOrder(orderList, orderService.totalOrderPrice(orderList));
         outputView.printBenefits(benefits, benefitService.totalBenefitPrice(benefits));

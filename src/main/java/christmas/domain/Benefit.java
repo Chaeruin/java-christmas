@@ -18,10 +18,6 @@ public class Benefit {
         return this.benefitType;
     }
 
-    public Day getDay() {
-        return this.day;
-    }
-
     public int getBenefitPrice() {
         return this.benefitPrice;
     }
