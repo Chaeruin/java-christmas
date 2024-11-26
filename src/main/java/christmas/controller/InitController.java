@@ -1,6 +1,5 @@
 package christmas.controller;
 
-import christmas.domain.Day;
 import christmas.domain.Menu;
 import christmas.enums.MenuType;
 import java.util.LinkedList;
@@ -41,12 +40,4 @@ public class InitController {
         menu.add(new Menu("샴페인", 25000, MenuType.DRINK));
     }
 
-
-    public List<Day> initDay() {
-        List<Day> days = new LinkedList<>();
-        for (int i = 1; i <= 31; i++) {
-            days.add(new Day(i));
-        }
-        return days;
-    }
 }

@@ -9,7 +9,8 @@
 16:02 utils 구현 및 설계 일부 조정 <br>
 16:50 출력 및 Controller 제외 대부분 기능 완성 <br>
 16:50 ~ 17:10 잠시 휴식<br>
-<br>
+17:44 Controller 및 Outputview 구현, 출력에 맞게 일부 도메인 및 서비스 수정 <br>
+17:45 테케 통과 <br>
 
 <br><br>
 

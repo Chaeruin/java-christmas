@@ -9,7 +9,9 @@ public class BadgeService {
             return Badge.STAR_BADGE;
         } else if (benefitPrice >= 10000 && benefitPrice < 20000) {
             return Badge.TREE_BADGE;
+        } else if (benefitPrice >= 20000) {
+            return Badge.SANTA_BADGE;
         }
-        return Badge.SANTA_BADGE;
+        return null;
     }
 }

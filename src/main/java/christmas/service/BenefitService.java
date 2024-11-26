@@ -21,7 +21,7 @@ public class BenefitService {
     }
 
     public Benefit dDayDiscountBenefit(Day day) {
-        return new Benefit(BenefitType.D_DAY_DISCOUNT, day, 1000 * (day.getDate() - 1));
+        return new Benefit(BenefitType.D_DAY_DISCOUNT, day, 1000 + 100 * (day.getDate() - 1));
     }
 
     public Benefit weekDayDiscountBenefit(List<Order> orderList, Day day) {
@@ -71,6 +71,7 @@ public class BenefitService {
             if (day.getStarDate().getIsStarDate()) {
                 benefits.add(starDayDiscountBenefit(day));
             }
+            // 증정 이벤트는 null 분기 처리 해줘야함
             benefits.add(giftPresentationBenefit(orderList, day));
         }
         return benefits;

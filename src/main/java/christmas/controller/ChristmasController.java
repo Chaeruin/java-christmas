@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Benefit;
 import christmas.domain.Day;
+import christmas.domain.Menu;
 import christmas.domain.Order;
 import christmas.service.BadgeService;
 import christmas.service.BenefitService;
@@ -34,17 +35,24 @@ public class ChristmasController {
     }
 
     public void run() {
-        init();
+        List<Menu> menu = initController.initMenu();
 
-    }
+        outputView.printStart();
+        Day day = inputDayHandler();
+        List<Order> orderList = inputOderListHandler();
+        orderService.exceedMenuCount(orderList);
+        orderService.isOnlyDrinkOrder(orderList);
+        List<Benefit> benefits = benefitService.settingBenefits(day, orderList);
 
-    public void init() {
-        initController.initMenu();
-        initController.initDay();
+        outputView.printDayBenefits(day);
+        outputView.printOrder(orderList, orderService.totalOrderPrice(orderList));
+        outputView.printBenefits(benefits, benefitService.totalBenefitPrice(benefits));
+        outputView.printExpectedPriceAndBadge(totalExpectedPrice(orderList, benefits),
+                badgeService.giveBadge(benefitService.totalBenefitPrice(benefits)));
     }
 
     public int totalExpectedPrice(List<Order> orderList, List<Benefit> benefits) {
-        return orderService.totalOrderPrice(orderList) - benefitService.totalBenefitPrice(benefits);
+        return orderService.totalOrderPrice(orderList) - benefitService.totalBenefitPrice(benefits) + 25_000;
     }
 
     public Day inputDayHandler() {
