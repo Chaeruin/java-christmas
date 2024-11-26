@@ -9,14 +9,14 @@ import java.util.List;
 
 public class InputParser {
 
-    public Day parseDay(String input) {
+    public static Day parseDay(String input) {
         if (InputValidator.isValidIntDate(input)) {
             return new Day(Integer.parseInt(input));
         }
         return null;
     }
 
-    public List<Order> parseOrder(String input, List<Menu> menu) {
+    public static List<Order> parseOrder(String input, List<Menu> menu) {
         List<Order> orderList = new LinkedList<>();
         if (InputValidator.isValidOrderInput(input) && InputValidator.isNotDuplicateMenu(input)) {
             String[] inputParse = input.replaceAll("-", ",").split(",");
@@ -27,7 +27,7 @@ public class InputParser {
         return orderList;
     }
 
-    public void setOrderList(List<Order> orderList, List<Menu> menu, String name, String count) {
+    public static void setOrderList(List<Order> orderList, List<Menu> menu, String name, String count) {
         Menu findMenu = Finder.findMenuFromOrder(menu, name);
         if (findMenu == null) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getErrorMessage());

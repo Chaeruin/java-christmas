@@ -22,7 +22,7 @@ public class Day {
     }
 
     void parseIsWeekEnd(int date) {
-        if (date % 7 == 2 || date % 7 == 3) {
+        if (date % 7 == 1 || date % 7 == 2) {
             this.isWeekEnd = true;
         } else {
             this.isWeekEnd = false;
